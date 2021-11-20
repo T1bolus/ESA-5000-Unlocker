@@ -7,17 +7,6 @@ ESACom esa(&Serial2);
 
 
 
-void taskloop(void *pvParameters)
-{
-  while(true)
-  {
-  delay(10000);
-  int speed = EEPROM.read(0);
-  Serial.println(speed);
-  esa.setSpeed(speed);
-  }
-}
-
 
 void setup() 
 {
@@ -27,7 +16,6 @@ void setup()
   Serial.begin(115200);
   Serial2.begin(115200);
 
-  //initBLEScanner();
 
   //initialize EEPROM with predefined size for esp32
   EEPROM.begin(1);
@@ -44,15 +32,6 @@ void setup()
 
 
 
-  //xTaskCreate(
-  //taskloop,   // Task function. 
-  //"taskLoop",     // name of task. 
-  //2196,       // Stack size of task 
-  //NULL,        // parameter of the task 
-  //3,           // priority of the task 
-  //NULL      // Task handle to keep track of created task 
-  //);          // pin task to core x
-
 
   int speed = EEPROM.read(0);
   Serial.println(speed);
@@ -62,8 +41,6 @@ void setup()
     Serial.println(speed);
   }
 
-  //Delete this task to free heap space
-  //vTaskDelete(NULL);
 }
 
 
@@ -71,17 +48,6 @@ void setup()
 
 void loop() 
 {
-  //startScan();
-  //delay(1000);
-  //int speed = EEPROM.read(0);
-  //Serial.println(speed);
-  //esa.setSpeed(speed);
-
-  //Serial2.flush();
-
-
-  //for(int i = 0; i < 10; i++)
-  {
     if(esa.rxHandler())
     {
       Serial.print("Speed: ");
@@ -93,7 +59,4 @@ void loop()
       Serial.print("Light: ");
       Serial.println(esa.getStatus().light);
     }
-    
-  }
-  
 }

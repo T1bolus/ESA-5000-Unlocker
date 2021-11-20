@@ -35,7 +35,7 @@ private:
 
 ESACom::ESACom(HardwareSerial *conSerial) : conSerial(conSerial)
 {
-    //conSerial->begin(115200);
+
 }
 
 ESACom::~ESACom()
@@ -49,13 +49,12 @@ bool ESACom::setSpeed(uint32_t speed)
                         0, 0, //rpm
                         };
 
-		//*(uint16_t *)&data[4] = (speed * 252) / 10;
-		*(uint16_t *)(data + 4) = (speed * 252) / 10;
+    *(uint16_t *)(data + 4) = (speed * 252) / 10;
 
 
-		this->sendPacket(data);
+    this->sendPacket(data);
 
-        return true;
+    return true;
 }
 
 
@@ -79,14 +78,6 @@ bool ESACom::sendPacket(const uint8_t *data) //data[0] must be the length-2
 
     uint16_t checksum = this->createChecksum(data);
 
-/*
-    Serial.println(0x55);
-    Serial.println(0xAA);
-    for(int i = 0; i < length; i++)
-        Serial.println(data[i]);
-    Serial.println((int)(checksum & 0x00FF));
-    Serial.println((int)(checksum >> 8));
-    */
     
     conSerial->write(0x55);
     conSerial->write(0xAA);

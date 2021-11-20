@@ -97,7 +97,7 @@ void setOptionPages()
 
 
     EEPROM.write(0, speed);
-    EEPROM.commit(); // only for esp
+    EEPROM.commit();
 
     
     esa.setSpeed(speed);
